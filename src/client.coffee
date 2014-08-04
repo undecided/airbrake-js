@@ -8,6 +8,11 @@
 
 merge = require './util/merge.coffee'
 
+top_level = if typeof window isnt 'undefined' then window else global
+top_level.Airbrake ||= []
+
+Airbrake.js_download_url ||= 'https://ssljscdn.airbrake.io/0.3/airbrake.min.js'
+Airbrake.catcher_domain  ||= 'https://api.airbrake.io'
 
 class Client
   constructor: (processor, reporter) ->
@@ -25,6 +30,9 @@ class Client
 
     if reporter
       @addReporter(reporter)
+
+    @js_download_url = Airbrake.js_download_url
+    @catcher_domain  = Airbrake.catcher_domain
 
   setProject: (id, key) ->
     @_projectId = id

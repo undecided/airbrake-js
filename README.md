@@ -1,6 +1,8 @@
-# Airbrake-JS [![Build Status](https://circleci.com/gh/airbrake/airbrake-js.png?circle-token=3c561e089366ed8e0c9ec396a69f9665c1331581)](https://circleci.com/gh/airbrake/airbrake-js)
+# Airbrake-JS 
 
 This is the JavaScript notifier for capturing errors in web browsers and reporting them to [Airbrake](http://airbrake.io).
+
+Note: This version is modified to allow reporting to custom servers (e.g. [Errbit](https://github.com/errbit/errbit))
 
 <img src="http://f.cl.ly/items/443E2J1D2W3x1E1u3j1u/JS-airbrakeman.jpg" width=800px>
 
@@ -14,6 +16,14 @@ Airbrake JavaScript notifier consists of 2 parts:
 Typical notifier setup looks like:
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+    // Note: This script is optional, and only necessary if you have your own
+    // airbrake-compatible error collection service (e.g. errbit)
+    // If these urls are not set, the system defaults to using airbrake.io
+    window.Airbrake = [];
+    Airbrake.js_download_url = "http://my.download.url/path/to/airbrake.js";
+    Airbrake.catcher_domain  = "http://my.airbrakealike.io";
+    </script>
     <script src="airbrake-shim.js" data-airbrake-project-id="FIXME" data-airbrake-project-key="FIXME" data-airbrake-environment-name="production"></script>
     <script src="app.js"></script>
 

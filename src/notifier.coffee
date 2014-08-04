@@ -10,6 +10,7 @@ client.consoleReporter = require('./reporters/console.coffee')
 shim = global.Airbrake
 global.Airbrake = client
 
+
 # Read configuration from DOM.
 require("./util/slurp_config_from_dom.coffee")(client)
 

@@ -1,5 +1,10 @@
 # Airbrake shim that stores exceptions until Airbrake notifier is loaded.
-window.Airbrake = []
+
+top_level = if typeof window isnt 'undefined' then window else global
+top_level.Airbrake ||= []
+
+Airbrake.js_download_url ||= 'https://ssljscdn.airbrake.io/0.3/airbrake.min.js'
+Airbrake.catcher_domain  ||= 'https://api.airbrake.io'
 
 # Wraps passed function and returns new function that catches and
 # reports unhandled exceptions.
@@ -33,7 +38,7 @@ window.onerror = (message, file, line, column, error) ->
 loadAirbrakeNotifier = ->
   script = document.createElement('script')
   sibling = document.getElementsByTagName('script')[0]
-  script.src = 'https://ssljscdn.airbrake.io/0.3/airbrake.min.js'
+  script.src = Airbrake.js_download_url
   script.async = true
   sibling.parentNode.insertBefore(script, sibling)
 
@@ -78,5 +83,5 @@ else
 # Reports exceptions thrown in jQuery event handlers.
 if window.jQuery
   setupJQ()
-else
-  console.warn('airbrake: jQuery not found; skipping jQuery instrumentation.');
+# else
+  # console.warn('airbrake: jQuery not found; skipping jQuery instrumentation.');
